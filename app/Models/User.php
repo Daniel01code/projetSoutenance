@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+        // Relation avec le modèle PreInscription
+    public function preInscriptions()
+    {
+        return $this->hasMany(pre_inscriptions::class);
+    }
 }
