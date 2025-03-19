@@ -9,6 +9,8 @@ class Cathegory extends Model
 {
     use HasFactory;
 
+    protected $with = ['specialities'];
+
     protected $fillable = ['name'];
 
     public function specialities()

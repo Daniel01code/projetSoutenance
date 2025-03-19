@@ -7,17 +7,19 @@ use App\Models\Financement;
 use App\Models\Mention;
 use App\Models\Paiement;
 use App\Models\pre_inscriptions;
+use App\Models\Specialité;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('admin');
+    // }
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
 
@@ -52,38 +54,7 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    // public function edit(pre_inscriptions $pre_inscriptions)
-    // {
-    //     return view('admin.preinscriptions.edit', [
-
-    //         'preInscription' => $pre_inscriptions->first()]);
-    // }
-
-    // public function edits(pre_inscriptions $pre_inscriptions)
-    // {
-    //     // dd($pre_inscriptions->first());
-    //     //fiancement
-
-    //     $finances = Financement::all()->take(4);
-
-    //     // Récupérer toutes les catégories et leurs spécialités
-    //     $categories = Cathegory::with('specialities')->get();
-
-    //     // Récupérer toutes les mentions
-    //     $mentions = Mention::all();
-
-    //     $familyStatuses = pre_inscriptions::FAMILY_STATUSES;
-
-    //     $sexes = pre_inscriptions::SEXES;
-
-    //     // mode de paiement
-
-    //     $paiements = Paiement::all();
-
-    //     return view('admin.preinscriptions.edit', [
-    //         'preInscription' => $pre_inscriptions->first() // Passez l'objet complet
-    //     ]);
-    // }
+   
     public function edit(pre_inscriptions $pre_inscriptions)
     {
 
@@ -158,13 +129,9 @@ class AdminController extends Controller
         ]);
 
         // dd($validatedData);
-        // Récupérer l'étudiant par son ID
-        // $preInscription = Pre_inscriptions::findOrFail($id);
-
-        // Mettre à jour les données
         $pre_inscriptions->first()->update($validatedData);
        return redirect()->route('admin.preinscriptions.index')->with('success', 'Les informations ont été mises à jour avec succès.');
-        // $pre_inscriptions->first()->update();
+
     }
 
     /**
@@ -177,5 +144,122 @@ class AdminController extends Controller
 
         // Redirection avec un message de succès
         return redirect()->route('admin.preinscriptions.index')->with('success', 'Préinscription supprimée avec succès.');
+    }
+
+    //  mehtode pour la gestion des categorie
+    public function indexCategory()
+    {
+
+        $cathegories = Cathegory::with('specialities')->get();
+        // dd($cathegories);
+
+        return view('admin.categorie.index', compact('cathegories'));
+    }
+    public function storeCategory(Request $request)
+    {
+        // Validation des données
+        $request->validate([
+            'name' => 'required|unique:cathegories,name|max:255',
+        ]);
+
+        // Création de la nouvelle catégorie
+        Cathegory::create([
+            'name' => $request->name,
+        ]);
+
+        // Rediriger vers la même page avec un message de succès
+        return redirect()->route('admin.categorie.index')->with('success', 'Catégorie ajoutée avec succès.');
+    }
+
+    public function destroyCategory(Cathegory $cathegory)
+    {
+      // Vérifiez si la catégorie est trouvée
+        if (!$cathegory) {
+        return redirect()->route('admin.categorie.index')->with('error', 'Catégorie non trouvée.');
+        }
+
+        // Supprimer la catégorie
+        $cathegory->delete();
+
+         // Rediriger avec un message de succès
+        return redirect()->route('admin.categorie.index')->with('success', 'Catégorie supprimée avec succès.');    
+    
+    }
+
+    public function updateCategory(Request $request, Cathegory $cathegory)
+    {
+        // Validation des données
+        $request->validate([
+            'name' => 'required|unique:cathegories,name,' . $cathegory->id . '|max:255',
+        ]);
+
+        // Mise à jour de la catégorie
+        $cathegory->update([
+            'name' => $request->name,
+        ]);
+
+        // Rediriger avec un message de succès
+        return redirect()->route('admin.categorie.index')->with('success', 'Catégorie mise à jour avec succès.');
+    }
+
+    //  mehtode pour la gestion des Specialité
+
+    public function indexSpeciality()
+    {
+
+        $specialities = Specialité::all();
+        $categories = Cathegory::latest()->paginate(10);
+
+        // dd($specialities);
+
+        return view('admin.speciality.index', compact('categories','specialities'));
+    }
+    public function storeSpeciality(Request $request)
+    {
+        // Validation des données
+        $data = $request->validate([
+            'name' => 'required|unique:cathegories,name|max:255',
+            'cathegory_id' => 'required|exists:cathegories,id',
+        ]);
+
+        // Création de la nouvelle catégorie
+        Specialité::create($data);
+
+        // Rediriger vers la même page avec un message de succès
+        return redirect()->route('admin.speciality.index')->with('success', 'Catégorie ajoutée avec succès.');
+    }
+
+    public function destroySpeciality(Specialité $specialité)
+    {
+
+      // Vérifiez si la catégorie est trouvée
+        if (!$specialité) {
+        return redirect()->route('admin.speciality.index')->with('succes', 'specialité non trouvée.');
+        }
+        $specialité->delete();
+
+        if($specialité->delete()){
+
+            return redirect()->route('admin.speciality.index')->with('success', 'spécialité supprimée avec succès.');    
+        }
+         // Rediriger avec un message de succès
+    
+    }
+
+
+    public function updateSpeciality(Request $request, Cathegory $cathegory)
+    {
+        // Validation des données
+        $request->validate([
+            'name' => 'required|unique:cathegories,name,' . $cathegory->id . '|max:255',
+        ]);
+
+        // Mise à jour de la catégorie
+        $cathegory->update([
+            'name' => $request->name,
+        ]);
+
+        // Rediriger avec un message de succès
+        return redirect()->route('admin.categorie.index')->with('success', 'Catégorie mise à jour avec succès.');
     }
 }

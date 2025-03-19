@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-red-600 border-b border-gray-200 mb-20 fixed w-full shadow-md">
+<nav x-data="{ open: false }" class="bg-red-600 border-b border-gray-200 mb-20 mt-0 fixed w-full shadow-md">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -41,6 +41,14 @@
                             Gérer les préinscriptions
                         </x-responsive-nav-link>
 
+                        <x-responsive-nav-link :href="route('admin.categorie.index')" class="hover:bg-gray-100">
+                            Gérer les cathegories des formations
+                        </x-responsive-nav-link>
+
+                        <x-responsive-nav-link :href="route('admin.speciality.index')" class="hover:bg-gray-100">
+                            Gérer les spécialitées
+                        </x-responsive-nav-link>
+                        
                         <x-responsive-nav-link :href="route('viewPreincriptionValidation')" class="hover:bg-gray-100">
                             Ma fiche de préinscription
                         </x-responsive-nav-link>
@@ -92,9 +100,17 @@
                 <x-responsive-nav-link :href="route('viewPreincriptionValidation')" class="hover:bg-gray-100">
                     Ma fiche de préinscription
                 </x-responsive-nav-link>
+                
+                <x-responsive-nav-link :href="route('admin.speciality.index')" class="hover:bg-gray-100">
+                    Gérer les spécialitées
+                </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('admin.preinscriptions.index')" class="hover:bg-gray-100">
                     Gérer les préinscriptions
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.categorie.index')" class="hover:bg-gray-100">
+                    Gérer les cathegories des formations
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
