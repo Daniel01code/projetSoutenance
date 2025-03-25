@@ -1,6 +1,6 @@
 {{-- preinscription/viewPreincriptionValidation.blade.php --}}
 <x-app-layout>
-    <body class="bg-gray-100 text-gray-800 p-6">
+    <div class="bg-gray-100 text-gray-800 p-6">
         <header class="flex justify-between items-center mb-6">
             <div class="text-center">
                 <p class="font-bold">MINISTRE DE L'EMPLOI ET DE <br> LA FORMATION PROFESSIONNELLE</p>
@@ -137,7 +137,7 @@
                             <p class="underline w-2/3"></p> <!-- Espace réservé -->
                         </div>
                         <div class="flex items-center">
-                            <label class="block mb-1 font-bold w-1/3">2023/2024 :</label>
+                            <label class="block mb-1 font- bold w-1/3">2023/2024 :</label>
                             <p class="underline w-2/3">{{ $preInscription->annee_passed1 }}</p>
                         </div>
                         <div class="flex items-center">
@@ -179,14 +179,57 @@
                         </div>
                     </div>
                 </fieldset>
+
+                <!-- Ajout des deux boutons -->
+                <div class="flex space-x-4 mt-6">
+                    <button id="printButton" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                        Imprimer
+                    </button>
+                    <a href="{{ route('preinscription.download', $preInscription->id) }}" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                        Générer PDF
+                    </a>
+                </div>
             @else
                 <p>{{ $message }}</p>
             @endif
-
-            <button id="printButton" class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                Imprimer
-            </button>
         </div>
+    </div>
 
-    </body>
+    <!-- Script pour l'impression -->
+    <script>
+        document.getElementById('printButton').addEventListener('click', function () {
+            window.print();
+        });
+    </script>
+
+    <!-- Styles pour l'impression -->
+    <style>
+        @media print {
+            #printButton, a[href] {
+                display: none; /* Masquer les boutons lors de l'impression */
+            }
+            .bg-gray-100 {
+                background-color: white;
+            }
+            .shadow-md, .rounded-lg {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            .p-6 {
+                padding: 1cm;
+            }
+            h1 {
+                font-size: 24pt;
+            }
+            h2 {
+                font-size: 18pt;
+            }
+            p, label {
+                font-size: 12pt;
+            }
+            fieldset {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
 </x-app-layout>

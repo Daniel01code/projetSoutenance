@@ -6,7 +6,7 @@ use App\Models\Cathegory;
 use App\Models\Financement;
 use App\Models\Mention;
 use App\Models\Paiement;
-use App\Models\pre_inscriptions;
+use App\Models\PreInscription; // Modèle corrigé
 use App\Models\Specialité;
 use Illuminate\Http\Request;
 
@@ -20,11 +20,15 @@ class AdminController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
-    {
-
-        return view('admin.preinscriptions.index', ['preinscrits' => pre_inscriptions::without('mention', 'speciality', 'financement', 'payment_mode')->latest()->get()]);
-    }
+     public function index()
+     {
+         // Récupère toutes les préinscriptions sans charger les relations par défaut
+         $preinscrits = PreInscription::without('mention', 'speciality', 'financement', 'payment_mode')
+             ->latest()
+             ->get();
+ 
+         return view('admin.preinscriptions.index', compact('preinscrits'));
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -45,57 +49,39 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pre_inscriptions $pre_inscriptions)
+    public function show(PreInscription $preInscription) // Injection corrigée
     {
-        // dd($pre_inscriptions->first());
-        return view('admin.preinscriptions.show', ['preInscription' => $pre_inscriptions->first()]);
+        return view('admin.preinscriptions.show', compact('preInscription'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
    
-    public function edit(pre_inscriptions $pre_inscriptions)
-    {
-
-        $finances = Financement::all()->take(4);
-
-        // Récupérer toutes les catégories et leurs spécialités
-        $categories = Cathegory::with('specialities')->get();
-
-        // Récupérer toutes les mentions
-        $mentions = Mention::all();
-
-        // dd($mentions);
-
-        $familyStatuses = pre_inscriptions::FAMILY_STATUSES;
-
-        $sexes = pre_inscriptions::SEXES;
-
-        // mode de paiement
-
-        $paiements = Paiement::all();
-
-        $pre_inscription = $pre_inscriptions->first();
-        // dd($pre_inscriptions->first());
-        return view('admin.preinscriptions.edit', compact(
-            'pre_inscription',
-            'categories',
-            'mentions',
-            'paiements',
-            'sexes',
-            'familyStatuses',
-            'finances'
-        ));
-    }
+     public function edit(PreInscription $preInscription) // Injection corrigée
+     {
+         $finances = Financement::all()->take(4);
+         $categories = Cathegory::with('specialités')->get(); // Relation corrigée
+         $mentions = Mention::all();
+         $familyStatuses = PreInscription::FAMILY_STATUSES; // Constante corrigée
+         $sexes = PreInscription::SEXES; // Constante corrigée
+         $paiements = Paiement::all();
+ 
+         return view('admin.preinscriptions.edit', compact(
+             'preInscription', // Variable corrigée (singulier)
+             'categories',
+             'mentions',
+             'paiements',
+             'sexes',
+             'familyStatuses',
+             'finances'
+         ));
+     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, pre_inscriptions $pre_inscriptions)
+    public function update(Request $request, PreInscription $preInscription) // Injection corrigée
     {
-
-
-        // Validation des données du formulaire
         $validatedData = $request->validate([
             'matricule' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
@@ -128,51 +114,49 @@ class AdminController extends Controller
             'signature' => 'nullable|string|max:255',
         ]);
 
-        // dd($validatedData);
-        $pre_inscriptions->first()->update($validatedData);
-       return redirect()->route('admin.preinscriptions.index')->with('success', 'Les informations ont été mises à jour avec succès.');
+        $preInscription->update($validatedData); // Plus besoin de first()
 
+        return redirect()->route('admin.preinscriptions.index')
+            ->with('success', 'Les informations ont été mises à jour avec succès.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pre_inscriptions $pre_inscriptions)
+    public function destroy(PreInscription $preInscription) // Injection corrigée
     {
+        $preInscription->delete(); // Plus besoin de first()
 
-        $pre_inscriptions->first()->delete();
-
-        // Redirection avec un message de succès
-        return redirect()->route('admin.preinscriptions.index')->with('success', 'Préinscription supprimée avec succès.');
+        return redirect()->route('admin.preinscriptions.index')
+            ->with('success', 'Préinscription supprimée avec succès.');
     }
 
     //  mehtode pour la gestion des categorie
+    
     public function indexCategory()
     {
-
-        $cathegories = Cathegory::with('specialities')->get();
-        // dd($cathegories);
-
-        return view('admin.categorie.index', compact('cathegories'));
+        $categories = Cathegory::with('specialités')->get(); // Chargement des spécialités associées
+        return view('admin.categorie.index', compact('categories')); // Passage des données à la vue
     }
+
     public function storeCategory(Request $request)
     {
-        // Validation des données
         $request->validate([
             'name' => 'required|unique:cathegories,name|max:255',
         ]);
 
-        // Création de la nouvelle catégorie
         Cathegory::create([
             'name' => $request->name,
         ]);
 
-        // Rediriger vers la même page avec un message de succès
-        return redirect()->route('admin.categorie.index')->with('success', 'Catégorie ajoutée avec succès.');
+        return redirect()->route('admin.categorie.index')
+            ->with('success', 'Catégorie ajoutée avec succès.');
     }
 
     public function destroyCategory(Cathegory $cathegory)
     {
+        // dd($cathegory);
+
       // Vérifiez si la catégorie est trouvée
         if (!$cathegory) {
         return redirect()->route('admin.categorie.index')->with('error', 'Catégorie non trouvée.');
@@ -204,62 +188,55 @@ class AdminController extends Controller
 
     //  mehtode pour la gestion des Specialité
 
-    public function indexSpeciality()
+        public function indexSpeciality()
     {
-
-        $specialities = Specialité::all();
-        $categories = Cathegory::latest()->paginate(10);
-
-        // dd($specialities);
-
-        return view('admin.speciality.index', compact('categories','specialities'));
+        $specialities = Specialité::with('cathegory')->get(); // Charge les catégories associées
+        $categories = Cathegory::all(); // Pour le formulaire de création
+        return view('admin.speciality.index', compact('categories', 'specialities'));
     }
+
     public function storeSpeciality(Request $request)
     {
-        // Validation des données
         $data = $request->validate([
-            'name' => 'required|unique:cathegories,name|max:255',
+            'name' => 'required|unique:specialités,name|max:255',
             'cathegory_id' => 'required|exists:cathegories,id',
         ]);
 
-        // Création de la nouvelle catégorie
         Specialité::create($data);
 
-        // Rediriger vers la même page avec un message de succès
-        return redirect()->route('admin.speciality.index')->with('success', 'Catégorie ajoutée avec succès.');
+        return redirect()->route('admin.speciality.index')
+            ->with('success', 'Spécialité ajoutée avec succès.');
     }
 
-    public function destroySpeciality(Specialité $specialité)
+    public function destroySpeciality(Specialité $speciality)
     {
-
-      // Vérifiez si la catégorie est trouvée
-        if (!$specialité) {
-        return redirect()->route('admin.speciality.index')->with('succes', 'specialité non trouvée.');
+        // dd($speciality);
+        if (!$speciality)
+        {
+            return redirect()->route('admin.speciality.index')->with('error', 'Catégorie non trouvée.');
         }
-        $specialité->delete();
 
-        if($specialité->delete()){
+        $speciality->delete(); 
+           
+        return redirect()->route('admin.speciality.index')
+            ->with('success', 'Spécialité supprimée avec succès.');     
 
-            return redirect()->route('admin.speciality.index')->with('success', 'spécialité supprimée avec succès.');    
-        }
-         // Rediriger avec un message de succès
-    
     }
 
-
-    public function updateSpeciality(Request $request, Cathegory $cathegory)
+    public function updateSpeciality(Request $request, Specialité $speciality)
     {
-        // Validation des données
         $request->validate([
-            'name' => 'required|unique:cathegories,name,' . $cathegory->id . '|max:255',
+            'name' => 'required|unique:specialités,name,' . $speciality->id . '|max:255',
+            'cathegory_id' => 'required|exists:cathegories,id',
         ]);
-
-        // Mise à jour de la catégorie
-        $cathegory->update([
+    
+        // dd($request);
+        
+        $speciality->update([
             'name' => $request->name,
+            'cathegory_id' => $request->cathegory_id,
         ]);
-
-        // Rediriger avec un message de succès
-        return redirect()->route('admin.categorie.index')->with('success', 'Catégorie mise à jour avec succès.');
+        
+        return redirect()->route('admin.speciality.index')->with('success', 'Spécialité mise à jour avec succès.');
     }
 }

@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pre_inscriptions extends Model
+class PreInscription extends Model
 {
     use HasFactory;
+
+    protected $table = 'preinscriptions'; // Nouveau nom de la table
     
     protected $with= ['mention','speciality','financement','payment_mode'];
     
@@ -21,21 +23,27 @@ class pre_inscriptions extends Model
         'feminin' => 'Féminin',
     ];
     protected $fillable = [
+     'user_id',
+        'matricule',
         'name',
         'surname',
-        'matricule',
         'birth_day',
         'birth_place',
         'city',
         'departement',
         'country',
+        'sex',
         'nationality',
+        'family_status',
         'disabled',
         'obtaining',
         'serie',
+        'mention_id',
         'school',
+        'speciality_id',
         'statut',
         'statutChief',
+        'financement_id',
         'payment_mode_id',
         'study_abroad',
         'annee_passed1',
@@ -44,43 +52,41 @@ class pre_inscriptions extends Model
         'annee_passed4',
         'full_name',
         'phone_number',
+        'email',
         'date',
         'signature',
-        'email',
-        'mention_id',
-        'financement_id',
-        'user_id',
-        'speciality_id', // Ajout de la relation avec Speciality
     ];
 
-
-    // Relation avec le modèle User
+    // Relation avec User
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Relation avec le modèle Mention
+    // Relation avec Mention
     public function mention()
     {
-        return $this->belongsTo(Mention::class);
+        return $this->belongsTo(Mention::class, 'mention_id');
     }
 
-    // Relation avec le modèle Financement
+    // Relation avec Financement
     public function financement()
     {
-        return $this->belongsTo(Financement::class);
+        return $this->belongsTo(Financement::class, 'financement_id');
     }
 
-    // Relation avec le modèle Speciality
+    // Relation avec Specialité
     public function speciality()
     {
-        return $this->belongsTo(Specialité::class);
+        return $this->belongsTo(Specialité::class, 'speciality_id');
     }
+
+    // Relation avec Paiement
     public function payment_mode()
     {
-        return $this->belongsTo(Paiement::class);
+        return $this->belongsTo(Paiement::class, 'payment_mode_id');
     }
+
     public function getRouteKeyName(): string
     {
         return 'id';

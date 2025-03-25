@@ -7,7 +7,7 @@ use App\Models\Cathegory;
 use App\Models\Financement;
 use App\Models\Mention;
 use App\Models\Paiement;
-use App\Models\pre_inscriptions;
+use App\Models\PreInscription;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -20,7 +20,7 @@ class PreInscriptionController extends Controller
         $userId = auth()->user()->id;
 
         // Récupérer les données de pré-inscription associées à l'utilisateur
-        $preInscription = Pre_inscriptions::where('user_id', $userId)->first();
+        $preInscription = PreInscription::where('user_id', $userId)->first();
 
         // Vérifiez si des données existent, sinon renvoyez une vue avec un message approprié
         if ($preInscription) {
@@ -33,26 +33,25 @@ class PreInscriptionController extends Controller
     public function preinscription()
     {
         $userId = auth()->user()->id; // Récupérer l'ID de l'utilisateur
-        //fiancement
 
+        // Financement
         $finances = Financement::all()->take(4);
-        
+    
         // Récupérer toutes les catégories et leurs spécialités
-        $categories = Cathegory::with('specialities')->get();
-                
+        $categories = Cathegory::with('specialités')->get();
+    
         // Récupérer toutes les mentions
         $mentions = Mention::all();
-
-        $familyStatuses = pre_inscriptions::FAMILY_STATUSES;
-
-        $sexes = pre_inscriptions::SEXES;
-        
-        // mode de paiement
-
+    
+        $familyStatuses = PreInscription::FAMILY_STATUSES;
+        $sexes = PreInscription::SEXES;
+    
+        // Mode de paiement
         $paiements = Paiement::all();
 
         return view('preinscription.preinscription', compact('userId','categories','mentions','paiements','sexes','familyStatuses','finances'));
     }
+    
     public function store(Request $request)
     {
         // Validation des données
@@ -69,7 +68,7 @@ class PreInscriptionController extends Controller
             'country' => 'required|string|max:255',
             'sex' => 'required|in:masculin,feminin',
             'nationality' => 'required|string|max:255',
-            'family_status' => 'required|in:Marié,Célibataire',
+            'family_status' => 'required',
             'disabled' => 'required|boolean',
             'obtaining' => 'required|date',
             'serie' => 'required|string|max:255',
@@ -95,9 +94,14 @@ class PreInscriptionController extends Controller
         // dd($validatedData);
     
         // Logique pour enregistrer les données ici
-        pre_inscriptions::create($validatedData);
+        PreInscription::create($validatedData);
     
         // Redirection vers le tableau de bord avec un message flash
         return redirect()->route('dashboard')->with('message', 'Votre pré-inscription a été enregistrée avec succès.');
-        }
+    }
+    
+    public function download ()
+    {
+        
+    }
 }

@@ -23,11 +23,13 @@ use Illuminate\View\View;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->name('viewPreincriptionValidation');
+Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->name('viewPreinscriptionValidation');
 
 Route::get('/pré_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
 
-Route::post('/pré_inscription', [ PreInscriptionController ::class , 'store'])->name('preincriptionValidation');
+Route::post('/pré_inscription', [ PreInscriptionController ::class , 'store'])->name('preinscriptionValidation');
+
+Route::post('/preinscription/download', [ PreInscriptionController ::class , 'download'])->name('preinscription.download');
 
 Route::get('/dashboard', function () {   return view('dashboard'); })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -62,18 +64,12 @@ Route::middleware(['auth','admin'])->group(function()
     Route::put('/admin/categorie/{cathegory}', [AdminController::class, 'updateCategory'])->name('admin.speciality.index');
     
     //  route pour gerer les specialité
-    
+
     Route::get('/admin/speciality/index', [AdminController::class, 'indexSpeciality'])->name('admin.speciality.index');
-    
     Route::post('/admin/speciality/store', [AdminController::class, 'storeSpeciality'])->name('admin.speciality.store');
-    
-    
-    Route::delete('/admin/speciality/{cathegory}', [AdminController::class, 'destroySpeciality'])->name('admin.speciality.destroy');
-    
-    Route::get('/admin/speciality/{speciality}/edit', [AdminController::class, 'editSpeciality'])->name('admin.speciality.edit');
-    
     Route::put('/admin/speciality/{speciality}', [AdminController::class, 'updateSpeciality'])->name('admin.speciality.update');
- });
+    Route::delete('/admin/speciality/{speciality}', [AdminController::class, 'destroySpeciality'])->name('admin.speciality.destroy');
+});
 
 
 require __DIR__.'/auth.php';

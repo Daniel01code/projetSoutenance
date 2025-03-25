@@ -59,14 +59,26 @@
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-left">ID</th>
                     <th class="py-3 px-6 text-left">Nom</th>
+                    <th class="py-3 px-6 text-left">specialite</th>
                     <th class="py-3 px-6 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
-                @foreach ($cathegories as $cathegory)
+                @foreach ($categories as $cathegory)
                     <tr class="border-b border-gray-300 hover:bg-gray-100">
                         <td class="py-3 px-6 text-left">{{ $cathegory->id }}</td>
                         <td class="py-3 px-6 text-left">{{ $cathegory->name }}</td>
+                        <td class="py-2 px-4 border-b">
+                            @if ($cathegory->specialités->isNotEmpty())
+                                <ul class="list-disc pl-5">
+                                    @foreach ($cathegory->specialités as $specialité)
+                                        <li>{{ $specialité->name }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                Aucune spécialité associée
+                            @endif
+                        </td>
                         <td class="py-3 px-8 text-center">
                             <button type="button" @click="showEditForm = true; editCategoryId = {{ $cathegory->id }}; editCategoryName = '{{ $cathegory->name }}'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded mr-3">
                                 Modifier

@@ -49,7 +49,7 @@
                             Gérer les spécialitées
                         </x-responsive-nav-link>
                         
-                        <x-responsive-nav-link :href="route('viewPreincriptionValidation')" class="hover:bg-gray-100">
+                        <x-responsive-nav-link :href="route('viewPreinscriptionValidation')" class="hover:bg-gray-100">
                             Ma fiche de préinscription
                         </x-responsive-nav-link>
 
@@ -97,7 +97,7 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
                 
-                <x-responsive-nav-link :href="route('viewPreincriptionValidation')" class="hover:bg-gray-100">
+                <x-responsive-nav-link :href="route('viewPreinscriptionValidation')" class="hover:bg-gray-100">
                     Ma fiche de préinscription
                 </x-responsive-nav-link>
                 

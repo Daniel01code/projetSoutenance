@@ -9,9 +9,10 @@ class Paiement extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
     
-    public function payment_mode()
+    public function preInscriptions()
     {
-        return $this->hasMany(pre_inscriptions::class);
+        return $this->hasMany(PreInscription::class, 'payment_mode_id');
     }
 }

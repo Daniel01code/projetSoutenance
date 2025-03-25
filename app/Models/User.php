@@ -43,9 +43,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
         // Relation avec le modèle PreInscription
+        
+    // Relation avec PreInscription
     public function preInscriptions()
     {
-        return $this->hasMany(pre_inscriptions::class);
+        return $this->hasMany(PreInscription::class, 'user_id');
+    }
+
+    // Méthode pour vérifier si l'utilisateur est admin
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 
 

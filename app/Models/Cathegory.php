@@ -13,8 +13,17 @@ class Cathegory extends Model
 
     protected $fillable = ['name'];
 
+    protected $table = 'cathegories'; // Nom de la table
+
+    /**
+     * Une catégorie a plusieurs spécialités
+     */
     public function specialities()
     {
-        return $this->hasMany(Specialité::class, 'cathegory_id'); // Assurez-vous que c'est 'cathegory_id'
+        return $this->hasMany(Specialité::class, 'cathegory_id', 'id');
+    }
+    public function specialités()
+    {
+        return $this->hasMany(Specialité::class); // Ou le nom exact de votre modèle Specialité
     }
 }

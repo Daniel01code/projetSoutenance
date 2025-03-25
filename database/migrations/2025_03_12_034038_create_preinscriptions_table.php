@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations.DB::select('SHOW TABLES');
      */
     public function up(): void
     {
-        Schema::create('pre_inscriptions', function (Blueprint $table) {
+        Schema::create('preinscriptions', function (Blueprint $table) {
             $table->id(); // id: integer, primary key, auto-increment
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // user_id: integer, foreign key
             $table->string('matricule'); // matricule: string

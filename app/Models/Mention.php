@@ -13,6 +13,6 @@ class Mention extends Model
     // Relation avec le modèle PreInscription
     public function preInscriptions()
     {
-        return $this->hasMany(pre_inscriptions::class);
+        return $this->hasMany(PreInscription::class);
     }
 }
