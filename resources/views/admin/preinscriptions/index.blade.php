@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto mt-10">
         <h1 class="text-3xl font-bold mb-6">Gestion des Préinscriptions</h1>
+        
 
         <div class="mb-4">
             <a href="" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
@@ -87,19 +88,17 @@
                         <td class="py-3 px-6 text-left">{{ $preinscrit->signature }}</td>
                         <td class="py-3 px-6 text-left">{{ $preinscrit->created_at }}</td>
                         <td class="py-3 px-6 text-left">{{ $preinscrit->updated_at }}</td>
-                        <td x-data class="py-3 px-6 text-center">
+                        <td x-data class="py-3 px-6 text-center flex">
                             <a href="{{ route('admin.preinscriptions.edit', $preinscrit->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded">
                                 Modifier
                             </a>
-                            <a @click.prevent="$refs.delete.submit()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded ml-2 cursor-pointer" >
+                            <a @click.prevent="$refs.delete.submit()" href="{{ route('admin.preinscriptions.destroy', $preinscrit) }}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded ml-2 cursor-pointer" >
                                 Supprimer
                             </a>
-                            <form hidden action="{{ route('admin.preinscriptions.destroy', $preinscrit->id) }}" method="POST" class="hidden">
+                            <form hidden action="{{ route('admin.preinscriptions.destroy', $preinscrit) }}" method="POST" class="hidden">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded ml-2">
-                                    Supprimer
-                                </button>
+                         
                             </form>
                         </td>
                     </tr>

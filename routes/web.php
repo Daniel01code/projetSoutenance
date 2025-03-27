@@ -44,11 +44,16 @@ Route::middleware(['auth','admin'])->group(function()
 {
     
     
-    Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [HomeController::class, 'adminIndex'])->name('admin.dashboard');
 
     Route::resource('/admin/preinscriptions', AdminController::class)->names('admin.preinscriptions');
     
     Route::post('/admin/preinscriptions', [AdminController::class, 'update'])->name('admin.preinscriptions.updat');
+
+    Route::get('/admin/preinscriptions/{preInscription}/edit', [AdminController::class, 'edit'])->name('admin.preinscriptions.edit');
+    Route::put('/admin/preinscriptions/{preInscription}', [AdminController::class, 'update'])->name('admin.preinscriptions.update');
+
+    Route::delete('/admin/preinscriptions/{preInscription}', [AdminController::class, 'destroy'])->name('admin.preinscriptions.destroy');
     
     //  route pour gerer les cathegories
     
@@ -63,6 +68,7 @@ Route::middleware(['auth','admin'])->group(function()
     
     Route::put('/admin/categorie/{cathegory}', [AdminController::class, 'updateCategory'])->name('admin.speciality.index');
     
+
     //  route pour gerer les specialité
 
     Route::get('/admin/speciality/index', [AdminController::class, 'indexSpeciality'])->name('admin.speciality.index');

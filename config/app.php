@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    // les packge pour genere les pdf
+    
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

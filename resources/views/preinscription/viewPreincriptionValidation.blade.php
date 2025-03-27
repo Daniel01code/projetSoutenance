@@ -23,6 +23,19 @@
             @if (isset($preInscription))
                 <input type="hidden" name="user_id" value="{{ $preInscription->user_id }}">
 
+                <!-- Nouvelle section pour la photo -->
+                <fieldset class="border-none mb-4">
+                    <div class="flex justify-end">
+                        <div class="w-[4cm] h-[4cm] border-2 border-dashed border-gray-400 rounded-md flex items-center justify-center photo-4x4">
+                            @if ($preInscription->fileUpload)
+                                <img src="{{ asset('storage/' . $preInscription->fileUpload) }}" alt="Photo de l'étudiant" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-gray-500">Aucune photo</span>
+                            @endif
+                        </div>
+                    </div>
+                </fieldset>
+
                 <fieldset class="border-none mb-4">
                     <h2 class="text-2xl font-semibold text-center mb-4">ÉTAT CIVIL</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -137,7 +150,7 @@
                             <p class="underline w-2/3"></p> <!-- Espace réservé -->
                         </div>
                         <div class="flex items-center">
-                            <label class="block mb-1 font- bold w-1/3">2023/2024 :</label>
+                            <label class="block mb-1 font-bold w-1/3">2023/2024 :</label>
                             <p class="underline w-2/3">{{ $preInscription->annee_passed1 }}</p>
                         </div>
                         <div class="flex items-center">

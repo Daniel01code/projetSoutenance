@@ -58,17 +58,25 @@ class AdminController extends Controller
      * Show the form for editing the specified resource.
      */
    
-     public function edit(PreInscription $preInscription) // Injection corrigée
+     public function edit(PreInscription $preInscription)
      {
+         // Vérifier que l'utilisateur est un administrateur
+         if (!auth()->user()->isAdmin()) { // À adapter selon ta logique d'authentification
+             abort(403, 'Accès réservé aux administrateurs.');
+         }
+ 
+         // Pas besoin de refaire findOrFail, l'injection de dépendance le fait déjà
+         // $preInscription est déjà une instance unique grâce à l'injection
+ 
          $finances = Financement::all()->take(4);
-         $categories = Cathegory::with('specialités')->get(); // Relation corrigée
+         $categories = Cathegory::with('specialités')->get(); // Relation avec "specialités"
          $mentions = Mention::all();
-         $familyStatuses = PreInscription::FAMILY_STATUSES; // Constante corrigée
-         $sexes = PreInscription::SEXES; // Constante corrigée
+         $familyStatuses = PreInscription::FAMILY_STATUSES; // Constante définie dans PreInscription
+         $sexes = PreInscription::SEXES; // Constante définie dans PreInscription
          $paiements = Paiement::all();
  
          return view('admin.preinscriptions.edit', compact(
-             'preInscription', // Variable corrigée (singulier)
+             'preInscription',
              'categories',
              'mentions',
              'paiements',

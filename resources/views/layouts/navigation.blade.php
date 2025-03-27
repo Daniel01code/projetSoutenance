@@ -1,127 +1,147 @@
-<nav x-data="{ open: false }" class="bg-red-600 border-b border-gray-200 mb-20 mt-0 fixed w-full shadow-md">
-    <!-- Primary Navigation Menu -->
+<!-- resources/views/layouts/navigation.blade.php -->
+<nav x-data="{ open: false }" class="bg-gradient-to-r from-blue-600 to-indigo-600 fixed top-0 w-full shadow-lg z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-white" />
-                    </a>
-                </div>
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            @if (Auth::user()->role == 'admin')
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-gray-300 transition duration-150">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+            <div class="flex items-center">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-2">
+                    <x-application-logo class="h-10 w-10 fill-current text-white" />
+                    <span class="text-white font-bold text-lg hidden md:block">CFP Canadienne</span>
+                </a>
             </div>
+            @else
+            
+            <div class="flex items-center">
+                <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                    <x-application-logo class="h-10 w-10 fill-current text-white" />
+                    <span class="text-white font-bold text-lg hidden md:block">CFP Canadienne</span>
+                </a>
+            </div>
+            @endif
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <!-- Navigation Links (Desktop) -->
+            @if (Auth::user()->role == 'admin')
+            <div class="hidden sm:flex sm:items-center space-x-6">
+                <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" class="text-white hover:text-indigo-200 transition duration-200 ease-in-out">
+                    {{ __('Tableau de bord') }}
+                </x-nav-link>
+            </div>
+            @else
+            <div class="hidden sm:flex sm:items-center space-x-6">
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-indigo-200 transition duration-200 ease-in-out">
+                    {{ __('Tableau de bord') }}
+                </x-nav-link>
+            </div>
+            @endif
+
+            <!-- User Dropdown (Desktop) -->
+            <div class="hidden sm:flex sm:items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
+                        <button class="flex items-center space-x-2 px-4 py-2 bg-indigo-700 text-white rounded-full hover:bg-indigo-800 focus:outline-none transition duration-200">
+                            <span>{{ Auth::user()->name }}</span>
+                            <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
                         </button>
                     </x-slot>
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')" class="hover:bg-gray-100">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <x-responsive-nav-link :href="route('admin.preinscriptions.index')" class="hover:bg-gray-100">
-                            Gérer les préinscriptions
-                        </x-responsive-nav-link>
-
-                        <x-responsive-nav-link :href="route('admin.categorie.index')" class="hover:bg-gray-100">
-                            Gérer les cathegories des formations
-                        </x-responsive-nav-link>
-
-                        <x-responsive-nav-link :href="route('admin.speciality.index')" class="hover:bg-gray-100">
-                            Gérer les spécialitées
-                        </x-responsive-nav-link>
+                    <x-slot name="content" class="bg-white shadow-lg rounded-lg p-2">
                         
-                        <x-responsive-nav-link :href="route('viewPreinscriptionValidation')" class="hover:bg-gray-100">
-                            Ma fiche de préinscription
-                        </x-responsive-nav-link>
+                    <x-dropdown-link :href="route('profile.edit')" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
+                        {{ __('Profil') }}
+                    </x-dropdown-link>
 
-                        <!-- Authentication -->
+                        @if (Auth::user()->role == 'admin')
+                        <x-dropdown-link :href="route('admin.preinscriptions.index')" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
+                            Gérer les préinscriptions
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('admin.categorie.index')" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
+                            Gérer les catégories
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('admin.speciality.index')" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
+                            Gérer les spécialités
+                        </x-dropdown-link>
+                        @else
+                        <x-dropdown-link :href="route('viewPreinscriptionValidation')" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
+                            Ma fiche de préinscription
+                        </x-dropdown-link>
+                            
+                        @endif
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();" class="hover:bg-gray-100">
-                                {{ __('Log Out') }}
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
+                                {{ __('Déconnexion') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
             </div>
 
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <!-- Hamburger (Mobile) -->
+            <div class="sm:hidden flex items-center">
+                <button @click="open = !open" class="p-2 text-white hover:bg-indigo-700 rounded-md focus:outline-none transition duration-200">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <!-- Responsive Menu (Mobile) -->
+    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-4" class="sm:hidden bg-indigo-600 shadow-lg">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="hover:bg-gray-100">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                {{ __('Tableau de bord') }}
             </x-responsive-nav-link>
         </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+        <div class="pt-4 pb-1 border-t border-indigo-500">
+            <div class="px-4 text-white">
+                <div class="font-medium text-base">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm opacity-75">{{ Auth::user()->email }}</div>
             </div>
-
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')" class="hover:bg-gray-100">
-                    {{ __('Profile') }}
+
+                <x-responsive-nav-link :href="route('profile.edit')" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                    {{ __('Profil') }}
                 </x-responsive-nav-link>
+
+
+                @if (Auth::user()->role == 'admin')
                 
-                <x-responsive-nav-link :href="route('viewPreinscriptionValidation')" class="hover:bg-gray-100">
+                <x-responsive-nav-link :href="route('admin.preinscriptions.index')" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                    Gérer les préinscriptions
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.categorie.index')" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                    Gérer les catégories
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.speciality.index')" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                    Gérer les spécialités
+                </x-responsive-nav-link>
+               
+                @else
+                
+                <x-responsive-nav-link :href="route('viewPreinscriptionValidation')" class="block px-4 py-2 text-white hover:bg-indigo-700">
                     Ma fiche de préinscription
                 </x-responsive-nav-link>
                 
-                <x-responsive-nav-link :href="route('admin.speciality.index')" class="hover:bg-gray-100">
-                    Gérer les spécialitées
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('admin.preinscriptions.index')" class="hover:bg-gray-100">
-                    Gérer les préinscriptions
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link :href="route('admin.categorie.index')" class="hover:bg-gray-100">
-                    Gérer les cathegories des formations
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
+                @endif
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();" class="hover:bg-gray-100">
-                        {{ __('Log Out') }}
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                        {{ __('Déconnexion') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
         </div>
     </div>
 </nav>
+{{-- 
+<!-- Ajouter un padding au contenu principal pour éviter le chevauchement -->
+<div class="pt-20">
+    {{ $slot }}
+</div> --}}
