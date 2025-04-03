@@ -1,0 +1,71 @@
+@startuml
+
+class User {
+  +id: int
+  +name: string
+  +email: string
+  +password: string
+  +role: string
+  +isAdmin(): bool
+}
+
+class PreInscription {
+  +id: int
+  +user_id: int
+  +matricule: string
+  +name: string
+  +surname: string
+  +birth_day: date
+  +birth_place: string
+  +city: string
+  +country: string
+  +sex: string
+  +nationality: string
+  +family_status: string
+  +disabled: bool
+  +obtaining: string
+  +serie: string
+  +mention_id: int
+  +school: string
+  +speciality_id: int
+  +financement_id: int
+  +payment_mode_id: int
+  +study_abroad: bool
+  +phone_number: string
+  +email: string
+}
+
+class Mention {
+  +id: int
+  +name: string
+}
+
+class Specialité {
+  +id: int
+  +name: string
+  +cathegory_id: int
+}
+
+class Cathegory {
+  +id: int
+  +name: string
+}
+
+class Financement {
+  +id: int
+  +name: string
+}
+
+class Paiement {
+  +id: int
+  +name: string
+}
+
+User "1" -- "*" PreInscription
+PreInscription "*" -- "1" Mention
+PreInscription "*" -- "1" Specialité
+PreInscription "*" -- "1" Financement
+PreInscription "*" -- "1" Paiement
+Specialité "*" -- "1" Cathegory
+
+@enduml

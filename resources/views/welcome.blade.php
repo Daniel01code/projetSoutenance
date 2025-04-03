@@ -1,62 +1,41 @@
+<!-- resources/views/layouts/guest.blade.php ou welcome.blade.php -->
 <x-guest-layout>
-    <div class="relative h-screen bg-cover bg-center" style="background-image: url('path/to/your/background-image.jpg');">
-        <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
-            <div class="text-center text-white">
-                <x-application-logo class="block h-20 mx-auto mb-4" />
-                <h1 id="dynamic-title" class="text-5xl font-bold mb-2"></h1>
-                <p class="text-lg mb-6">Votre avenir commence ici. Formations professionnelles adaptées à vos besoins.</p>
-                <button @click="showModal = true" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                    En savoir plus
-                </button>
+    <!-- Conteneur principal avec image de fond -->
+    <div class="relative min-h-screen">
+        <!-- Image de fond -->
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/image/image.png');"></div>
+        <div class="absolute inset-0 bg-gray-900 opacity-60"></div> <!-- Opacité sombre pour lisibilité -->
 
-                <div class="mt-4">
-                    @if (Route::has('login'))
-                        <a href="{{ route('login') }}" class="text-blue-300 hover:underline">Se connecter</a>
-                    @endif
+        <!-- Contenu principal -->
+        <div class="relative z-10 flex flex-col items-center justify-between min-h-screen px-4 sm:px-6 lg:px-8">
+            <!-- Section texte -->
+            <div class="w-full pt-20 pb-10 text-center">
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl text-white font-extrabold leading-tight animate-slide-in drop-shadow-md">
+                    Votre Avenir <br> Commence Ici
+                </h1>
+                <p class="mt-4 text-sm sm:text-lg lg:text-xl text-white/90 animate-slide-in animation-delay-200 max-w-2xl mx-auto">
+                    Rejoignez des milliers d’étudiants et commencez vos études au Canada dès aujourd’hui !
+                </p>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-blue-300 hover:underline">S'inscrire</a>
-                    @endif
-
-                    @auth
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
-                            @csrf
-                            <button type="submit" class="ml-4 text-blue-300 hover:underline">Se déconnecter</button>
-                        </form>
-                    @endauth
+                <!-- Boutons -->
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mt-6 sm:mt-8">
+                    <a href="{{ route('login') }}" class="flex items-center gap-3 bg-indigo-500 text-white px-5 py-2 sm:px-7 sm:py-3 rounded-full hover:bg-indigo-600 hover:scale-110 hover:shadow-xl transition-all duration-300">
+                        <i class="fas fa-sign-in-alt text-base sm:text-lg"></i>
+                        <span class="font-semibold text-sm sm:text-base">Connexion</span>
+                    </a>
+                    <a href="{{ route('register') }}" class="flex items-center gap-3 bg-teal-500 text-white px-5 py-2 sm:px-7 sm:py-3 rounded-full hover:bg-teal-600 hover:scale-110 hover:shadow-xl transition-all duration-300">
+                        <i class="fas fa-user-plus text-base sm:text-lg"></i>
+                        <span class="font-semibold text-sm sm:text-base">Inscription</span>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal -->
-        <div x-data="{ showModal: false }" x-show="showModal" class="fixed inset-0 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg p-6 w-11/12 max-w-md">
-                <h2 class="text-lg font-bold mb-4">À propos de nous</h2>
-                <p class="mb-4">Nous offrons des formations de qualité dans divers domaines, adaptées à vos besoins professionnels.</p>
-                <button @click="showModal = false" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded">
-                    Fermer
-                </button>
-            </div>
+
+            <!-- Image au premier plan -->
+           
         </div>
     </div>
 
-    <script src="//unpkg.com/alpinejs" defer></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const titleText = "Bienvenue au Centre de Formation Professionnelle La Canadienne";
-            const titleElement = document.getElementById('dynamic-title');
-            let index = 0;
-
-            function typeLetter() {
-                if (index < titleText.length) {
-                    titleElement.textContent += titleText.charAt(index);
-                    index++;
-                    setTimeout(typeLetter, 100); // Ajustez la vitesse ici
-                }
-            }
-
-            typeLetter();
-        });
-    </script>
+    
+   
 </x-guest-layout>

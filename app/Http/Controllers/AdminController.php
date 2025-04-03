@@ -12,43 +12,17 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('admin');
-    // }
-    /**
-     * Display a listing of the resource.
-     */
 
-     public function index()
-     {
-         // Récupère toutes les préinscriptions sans charger les relations par défaut
-         $preinscrits = PreInscription::without('mention', 'speciality', 'financement', 'payment_mode')
-             ->latest()
-             ->get();
- 
-         return view('admin.preinscriptions.index', compact('preinscrits'));
-     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index()
     {
-        //
+        // Récupère toutes les préinscriptions sans charger les relations par défaut
+        $preinscrits = PreInscription::without('mention', 'speciality', 'financement', 'payment_mode')
+            ->latest()
+            ->get();
+
+        return view('admin.preinscriptions.index', compact('preinscrits'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(PreInscription $preInscription) // Injection corrigée
     {
         return view('admin.preinscriptions.show', compact('preInscription'));

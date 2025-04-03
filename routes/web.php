@@ -22,7 +22,7 @@ use Illuminate\View\View;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('homePage');
 Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->name('viewPreinscriptionValidation');
 
 Route::get('/pré_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
