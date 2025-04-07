@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Mention extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
 
-    // Relation avec le modèle PreInscription
+    protected $fillable = ['name'];
+    
     public function preInscriptions()
     {
-        return $this->hasMany(PreInscription::class);
+        return $this->hasMany(PreInscription::class, 'payment_mode_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use League\CommonMark\Extension\Mention\Mention;
 
 class PreInscription extends Model
 {
@@ -66,7 +67,7 @@ class PreInscription extends Model
     // Relation avec Mention
     public function mention()
     {
-        return $this->belongsTo(Mention::class, 'mention_id');
+        return $this->belongsTo(Mention ::class, 'mention_id');
     }
 
     // Relation avec Financement
