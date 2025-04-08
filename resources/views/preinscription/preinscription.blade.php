@@ -272,9 +272,9 @@
                     </fieldset>
                     <div class="mt-6 text-center">
                         <button type="button" class="btn-slide" x-on:click="currentSlide = 2">Précédent</button>
-                        <button type="submit" class="btn-submit" :disabled="currentSlide !== totalSlides - 1">Soumettre</button>
                     </div>
                 </div>
+                <button type="submit" class="btn-submit" :disabled="currentSlide !== totalSlides - 1">Soumettre</button>
             </form>
         </div>
     </div>
