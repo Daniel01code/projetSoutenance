@@ -27,7 +27,8 @@ Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->nam
 
 Route::get('/pré_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
 
-Route::post('/pré_inscription', [ PreInscriptionController ::class , 'store'])->name('preinscriptionValidation');
+Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
+// Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
 
 Route::post('/preinscription/download', [ PreInscriptionController ::class , 'download'])->name('preinscription.download');
 

@@ -201,6 +201,9 @@
                     <a href="{{ route('preinscription.download', $preInscription->id) }}" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
                         Générer PDF
                     </a>
+                    <a href="{{ route('preinscription.download', $preInscription->id) }}" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                        Modifier
+                    </a>
                 </div>
             @else
                 <p>{{ $message }}</p>
