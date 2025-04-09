@@ -47,7 +47,7 @@ class PreInscriptionController extends Controller
         $familyStatuses = PreInscription::FAMILY_STATUSES;
         $sexes = PreInscription::SEXES;
     
-        // Mode de paiement
+        // 05-Mode de paiement
         $paiements = Paiement::all();
 
         return view('preinscription.preinscription', compact('userId','categories','mentions','paiements','sexes','familyStatuses','finances'));
