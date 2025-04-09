@@ -41,7 +41,7 @@ class PreInscriptionController extends Controller
         // 04-Récupérer toutes les catégories et leurs spécialités
         $categories = Cathegory::with('specialités')->get();
     
-        // Récupérer toutes les mentions
+        // 05-Récupérer toutes les mentions
         $mentions = Mention::all();
     
         $familyStatuses = PreInscription::FAMILY_STATUSES;
