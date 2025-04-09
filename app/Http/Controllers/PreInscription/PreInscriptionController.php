@@ -104,7 +104,7 @@ class PreInscriptionController extends Controller
     // 03-Méthode pour afficher le formulaire de mise à jour
     public function edit(PreInscription $preInscription) // 010Utilisation du route model binding
     {
-        $idAuth = intval(Auth::id()); // Point-virgule ajouté, "intintval" corrigé en "intval"
+        $idAuth = intval(Auth::id()); // 11-Point-virgule ajouté, "intintval" corrigé en "intval"
         $user_id = intval($preInscription->user_id); // Point-virgule ajouté, "intintval" corrigé en "intval"
         
         if ($idAuth !== $user_id && !Auth::user()->isAdmin()) {
