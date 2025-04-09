@@ -119,7 +119,7 @@ class PreInscriptionController extends Controller
         $paiements = Paiement::all();
 
         return view('preinscription.edit', compact(
-            'preInscription', // Injecté via route model binding
+            'preInscription', // 13-Injecté via route model binding
             'finances',
             'categories',
             'mentions',
