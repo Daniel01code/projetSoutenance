@@ -20,7 +20,7 @@ class PreInscriptionController extends Controller
         // 02-Récupérer l'ID de l'utilisateur connecté
         $userId = auth()->user()->id;
 
-        // Récupérer les données de pré-inscription associées à l'utilisateur
+        // 03-Récupérer les données de pré-inscription associées à l'utilisateur
         $preInscription = PreInscription::where('user_id', $userId)->first();
 
         // Vérifiez si des données existent, sinon renvoyez une vue avec un message approprié
