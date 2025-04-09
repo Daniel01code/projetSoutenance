@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('country'); // country: string
             $table->enum('sex', ['masculin', 'feminin']); // sex: enum
             $table->string('nationality'); // nationality: string
-            $table->string('fileUpload');//photo de l'etudiant
+            $table->string('fileUpload')->nullable();//photo de l'etudiant
             $table->enum('family_status', ['Marié', 'Célibataire']); // family_status: enum
             $table->boolean('disabled'); // disabled: boolean
             $table->date('obtaining'); // obtaining: date

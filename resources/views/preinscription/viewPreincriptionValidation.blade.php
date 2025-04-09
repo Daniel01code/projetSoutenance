@@ -19,7 +19,7 @@
 
         <h1 class="text-3xl font-semibold text-center mb-6">FICHE DE PRÉ-INSCRIPTION 2024/2025</h1>
     
-<!-- Affichage du message de succès amélioré -->
+        <!-- Affichage du message de succès amélioré -->
         @if (session('success'))
             <div class="bg-green-500 text-white p-4 rounded-lg shadow-md text-center mb-6">
                 <p class="font-semibold">{{ session('success') }}</p>

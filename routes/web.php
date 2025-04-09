@@ -45,6 +45,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/preinscription/{preInscription}/edit', [PreInscriptionController::class, 'edit'])->name('preinscription.edit');
     Route::patch('/preinscription/{preInscription}', [PreInscriptionController::class, 'update'])->name('preinscription.update');
     Route::get('/generate-pdf', [PdfController::class, 'generatePdf'])->name('generate.pdf');
+    Route::get('/preinscription/{preInscription}/pdf', [PdfController::class, 'downloadPdf'])->name('preinscription.pdf');
 });
 
 

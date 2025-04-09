@@ -178,9 +178,17 @@ class PreInscriptionController extends Controller
         // Mise à jour de l'enregistrement (matricule et user_id ne sont pas inclus dans $validated)
         $preInscription->update($validated);
 
-        
-        return redirect()->route('viewPreinscriptionValidation')
-            ->with('success', 'Préinscription mise à jour avec succès.');
+        if (Auth::user()->isAdmin()) {
+           
+            
+            return redirect()->route('admin.preinscriptions.index')
+                ->with('success', 'Etudiant mise à jour avec succès.');
+        }else{
+
+            return redirect()->route('viewPreinscriptionValidation')
+                ->with('success', 'Mise à jour de ma réinscription avec succès.');
+        }
+
     }
     public function download ()
     {

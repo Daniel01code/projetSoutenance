@@ -9,6 +9,13 @@
             </a>
         </div>
 
+        <!-- Affichage du message de succès amélioré -->
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg shadow-md text-center mb-6">
+                <p class="font-semibold">{{ session('success') }}</p>
+            </div>
+        @endif
+
         <table class="min-w-full bg-white border border-gray-300">
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -89,7 +96,7 @@
                         <td class="py-3 px-6 text-left">{{ $preinscrit->created_at }}</td>
                         <td class="py-3 px-6 text-left">{{ $preinscrit->updated_at }}</td>
                         <td x-data class="py-3 px-6 text-center flex">
-                            <a href="{{ route('admin.preinscriptions.edit', $preinscrit->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded">
+                            <a href="{{ route('preinscription.edit', $preinscrit) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded">
                                 Modifier
                             </a>
                             <a @click.prevent="$refs.delete.submit()" href="{{ route('admin.preinscriptions.destroy', $preinscrit) }}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded ml-2 cursor-pointer" >
