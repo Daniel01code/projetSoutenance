@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreInscription\PreInscriptionController;
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/preinscription/{preInscription}/edit', [PreInscriptionController::class, 'edit'])->name('preinscription.edit');
     Route::patch('/preinscription/{preInscription}', [PreInscriptionController::class, 'update'])->name('preinscription.update');
+    Route::get('/generate-pdf', [PdfController::class, 'generatePdf'])->name('generate.pdf');
 });
 
 
