@@ -110,7 +110,7 @@ class PreInscriptionController extends Controller
         if ($idAuth !== $user_id && !Auth::user()->isAdmin()) {
             abort(403, 'Vous n’êtes pas autorisé à modifier cette préinscription.');
         }
-        // Récupération des données pour les listes déroulantes
+        // 12-Récupération des données pour les listes déroulantes
         $finances = Financement::all()->take(4);
         $categories = Cathegory::with('specialités')->get(); // Assurez-vous que le modèle est correct
         $mentions = Mention::all();
