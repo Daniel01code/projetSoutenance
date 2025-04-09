@@ -101,7 +101,7 @@ class PreInscriptionController extends Controller
     
         return redirect()->route('dashboard')->with('message', 'Votre pré-inscription a été enregistrée avec succès.');
     }
-    // Méthode pour afficher le formulaire de mise à jour
+    // 03-Méthode pour afficher le formulaire de mise à jour
     public function edit(PreInscription $preInscription) // Utilisation du route model binding
     {
         $idAuth = intval(Auth::id()); // Point-virgule ajouté, "intintval" corrigé en "intval"
