@@ -211,6 +211,10 @@
                     <a href="{{ route('preinscription.edit', $preInscription) }}" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
                         Modifier Informations
                     </a>
+                    <!-- Nouveau bouton pour voir le PDF -->
+                    <a href="{{ route('preinscription.view', $preInscription) }}" class="bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700" target="_blank">
+                        Voir PDF
+                    </a>
                 </div>
             @else
                 <p>{{ $message }}</p>

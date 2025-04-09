@@ -278,9 +278,6 @@
                         <input type="date" name="date" id="date" class="w-full p-2 border-b border-gray-300 focus:outline-none focus:ring focus:ring-blue-400" value="{{ old('date') }}" required>
                         @error('date') <div class="error">{{ $message }}</div> @enderror
 
-                        <label for="signature" class="block mb-1 font-medium">Signature</label>
-                        <input type="text" name="signature" id="signature" class="w-full p-2 border-b border-gray-300 focus:outline-none focus:ring focus:ring-blue-400" value="{{ old('signature') }}">
-                        @error('signature') <div class="error">{{ $message }}</div> @enderror
                     </div>
                     <div class="mt-6 text-center">
                         <button type="button" class="btn-slide" x-on:click="prevSlide()">Précédent</button>

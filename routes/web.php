@@ -26,9 +26,9 @@ Route::get('/', function () {
 })->name('homePage');
 Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->name('viewPreinscriptionValidation');
 
-Route::get('/pré_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
+Route::get('/pre_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
 
-Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
+Route::post('/pre_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
 // Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
 
 Route::post('/preinscription/download', [ PreInscriptionController ::class , 'download'])->name('preinscription.download');
@@ -44,8 +44,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/preinscription/{preInscription}/edit', [PreInscriptionController::class, 'edit'])->name('preinscription.edit');
     Route::patch('/preinscription/{preInscription}', [PreInscriptionController::class, 'update'])->name('preinscription.update');
-    Route::get('/generate-pdf', [PdfController::class, 'generatePdf'])->name('generate.pdf');
-    Route::get('/preinscription/{preInscription}/pdf', [PdfController::class, 'downloadPdf'])->name('preinscription.pdf');
+    Route::get('/preinscription/{preInscription}/download', [PdfController::class, 'download'])->name('preinscription.download');
+    // Nouvelle route pour visualiser le PDF
+    Route::get('/preinscription/{preInscription}/view', [PdfController::class, 'view'])->name('preinscription.view');
 });
 
 
