@@ -33,7 +33,7 @@ class PreInscriptionController extends Controller
     
     public function preinscription()
     {
-        $userId = auth()->user()->id; // Récupérer l'ID de l'utilisateur
+        $userId = auth()->user()->id; // 06-Récupérer l'ID de l'utilisateur
 
         // Financement
         $finances = Financement::all()->take(4);
