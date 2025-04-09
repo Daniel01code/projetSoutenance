@@ -52,6 +52,11 @@
                             <x-dropdown-link :href="route('viewPreinscriptionValidation')" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100 rounded-md">
                                 Ma fiche de préinscription
                             </x-dropdown-link>
+                            
+                            <x-responsive-nav-link href="{{ route('generate.pdf') }}" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                                Télécharger et Imprimer le PDF
+                            </x-responsive-nav-link>
+                            
                         @endif
 
                         <form method="POST" action="{{ route('logout') }}">
@@ -108,6 +113,10 @@
                 @else
                     <x-responsive-nav-link :href="route('viewPreinscriptionValidation')" class="block px-4 py-2 text-white hover:bg-indigo-700">
                         Ma fiche de préinscription
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link href="{{ route('generate.pdf') }}" class="block px-4 py-2 text-white hover:bg-indigo-700">
+                        Télécharger et Imprimer le PDF
                     </x-responsive-nav-link>
                 @endif
 

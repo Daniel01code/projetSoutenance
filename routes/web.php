@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreInscription\PreInscriptionController;
@@ -27,7 +28,8 @@ Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->nam
 
 Route::get('/pré_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
 
-Route::post('/pré_inscription', [ PreInscriptionController ::class , 'store'])->name('preinscriptionValidation');
+Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
+// Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
 
 Route::post('/preinscription/download', [ PreInscriptionController ::class , 'download'])->name('preinscription.download');
 
@@ -37,6 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/preinscription/{preInscription}/edit', [PreInscriptionController::class, 'edit'])->name('preinscription.edit');
+    Route::patch('/preinscription/{preInscription}', [PreInscriptionController::class, 'update'])->name('preinscription.update');
+    Route::get('/generate-pdf', [PdfController::class, 'generatePdf'])->name('generate.pdf');
 });
 
 

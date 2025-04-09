@@ -18,6 +18,13 @@
         </header>
 
         <h1 class="text-3xl font-semibold text-center mb-6">FICHE DE PRÉ-INSCRIPTION 2024/2025</h1>
+    
+<!-- Affichage du message de succès amélioré -->
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg shadow-md text-center mb-6">
+                <p class="font-semibold">{{ session('success') }}</p>
+            </div>
+        @endif
 
         <div class="space-y-6 bg-white p-6 rounded-lg shadow-md">
             @if (isset($preInscription))
@@ -198,8 +205,11 @@
                     <button id="printButton" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
                         Imprimer
                     </button>
-                    <a href="{{ route('preinscription.download', $preInscription->id) }}" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                    <a href="{{ route('preinscription.download', $preInscription) }}" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
                         Générer PDF
+                    </a>
+                    <a href="{{ route('preinscription.edit', $preInscription) }}" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                        Modifier Informations
                     </a>
                 </div>
             @else

@@ -17,7 +17,7 @@ class PreInscriptionController extends Controller
     public function show()
     {
         
-        // Récupérer l'ID de l'utilisateur connecté
+        // 02-Récupérer l'ID de l'utilisateur connecté
         $userId = auth()->user()->id;
 
         // Récupérer les données de pré-inscription associées à l'utilisateur
@@ -84,7 +84,7 @@ class PreInscriptionController extends Controller
             'annee_passed3' => 'required|string|max:255',
             'annee_passed4' => 'required|string|max:255',
             'full_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:15',
+            'phone_number' => 'required|string|max:30',
             'email' => 'required|email|max:255',
             'date' => 'required|date',
             'signature' => 'nullable|string|max:255',

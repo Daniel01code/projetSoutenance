@@ -13,6 +13,6 @@ class Mention extends Model
     
     public function preInscriptions()
     {
-        return $this->hasMany(PreInscription::class, 'payment_mode_id');
+        return $this->hasMany(PreInscription::class, 'mention_id');
     }
 }
