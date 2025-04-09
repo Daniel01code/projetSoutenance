@@ -38,7 +38,7 @@ class PreInscriptionController extends Controller
         // 02Financement
         $finances = Financement::all()->take(4);
     
-        // Récupérer toutes les catégories et leurs spécialités
+        // 04-Récupérer toutes les catégories et leurs spécialités
         $categories = Cathegory::with('specialités')->get();
     
         // Récupérer toutes les mentions
