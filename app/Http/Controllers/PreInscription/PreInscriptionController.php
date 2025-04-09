@@ -23,7 +23,7 @@ class PreInscriptionController extends Controller
         // 03-Récupérer les données de pré-inscription associées à l'utilisateur
         $preInscription = PreInscription::where('user_id', $userId)->first();
 
-        // Vérifiez si des données existent, sinon renvoyez une vue avec un message approprié
+        // 03-Vérifiez si des données existent, sinon renvoyez une vue avec un message approprié
         if ($preInscription) {
             return view('preinscription.viewPreincriptionValidation', compact('preInscription'));
         } else {
