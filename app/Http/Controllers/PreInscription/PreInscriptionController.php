@@ -132,7 +132,7 @@ class PreInscriptionController extends Controller
     // 14-Méthode pour traiter la mise à jour
     public function update(Request $request, PreInscription $preInscription)
     {
-        // Vérification des autorisations
+        // 15-Vérification des autorisations
         $idAuth = intval(Auth::id());
         $user_id = intval($preInscription->user_id);
 
