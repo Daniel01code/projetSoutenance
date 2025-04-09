@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/preinscription/{preInscription}/edit', [PreInscriptionController::class, 'edit'])->name('preinscription.edit');
+    Route::patch('/preinscription/{preInscription}', [PreInscriptionController::class, 'update'])->name('preinscription.update');
+});
+
 
 Route::middleware(['auth','admin'])->group(function()
 {
