@@ -35,7 +35,7 @@ class PreInscriptionController extends Controller
     {
         $userId = auth()->user()->id; // 06-Récupérer l'ID de l'utilisateur
 
-        // Financement
+        // 02Financement
         $finances = Financement::all()->take(4);
     
         // Récupérer toutes les catégories et leurs spécialités
