@@ -129,7 +129,7 @@ class PreInscriptionController extends Controller
         ));
     }
 
-    // Méthode pour traiter la mise à jour
+    // 14-Méthode pour traiter la mise à jour
     public function update(Request $request, PreInscription $preInscription)
     {
         // Vérification des autorisations
