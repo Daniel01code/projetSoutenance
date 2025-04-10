@@ -27,6 +27,13 @@
                         <i class="fas fa-user-plus text-base sm:text-lg"></i>
                         <span class="font-semibold text-sm sm:text-base">Inscription</span>
                     </a>
+                    @auth
+                        <x-nav-link :href="Auth::user()->role === 'admin' ? route('admin.dashboard') : route('dashboard')" 
+                            :active="request()->routeIs(Auth::user()->role === 'admin' ? 'admin.dashboard' : 'dashboard')" 
+                            class="flex items-center gap-3 bg-teal-500 text-white px-5 py-2 sm:px-7 sm:py-3 rounded-full hover:bg-teal-600 hover:scale-110 hover:shadow-xl transition-all duration-300">
+                            {{ __('Tableau de bord') }}
+                        </x-nav-link>
+                    @endauth
                 </div>
             </div>
 
