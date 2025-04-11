@@ -8,8 +8,14 @@
             <!-- Logo -->
             <div class="flex items-center">
                 
-            <img class="w-17 h-14 rounded-full" src="/image/LOGO RETINA.jpg" alt="Logo">
-                     
+                <div class="hidden sm:flex sm:items-center space-x-6">
+                    <x-nav-link :href="Auth::user()->role === 'admin' ? route('admin.dashboard') : route('dashboard')" 
+                        :active="request()->routeIs(Auth::user()->role === 'admin' ? 'admin.dashboard' : 'dashboard')" 
+                        class="text-white hover:text-indigo-200 transition duration-200 ease-in-out">
+                        <img class="w-17 h-14 rounded-full" src="/image/LOGO RETINA.jpg" alt="Logo">
+                    </x-nav-link>
+                </div>  
+                 
             </div>
 
             <!-- Navigation Links (Desktop) -->
