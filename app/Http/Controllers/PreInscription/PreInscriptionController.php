@@ -27,12 +27,19 @@ class PreInscriptionController extends Controller
         if ($preInscription) {
             return view('preinscription.viewPreincriptionValidation', compact('preInscription'));
         } else {
-            return view('preinscription.viewPreincriptionValidation')->with('message', 'Aucune pré-inscription trouvée pour cet utilisateur.');
+            return redirect()->route('preincription');
         }
     }
     
     public function preinscription()
     {
+
+        // Vérifie si l'utilisateur a déjà une pré-inscription
+        if (PreInscription::where('user_id', Auth::id())->exists()) 
+        {
+            return redirect()->route('dashboard')->with('message', 'Vous avez déjà complété votre pré-inscription.');
+        }
+
         $userId = auth()->user()->id; // Récupérer l'ID de l'utilisateur
 
         // Financement
@@ -104,6 +111,11 @@ class PreInscriptionController extends Controller
     // Méthode pour afficher le formulaire de mise à jour
     public function edit(PreInscription $preInscription) // Utilisation du route model binding
     {
+        // Vérifie si l'utilisateur a déjà une pré-inscription
+        if (!PreInscription::where('user_id', Auth::id())->exists()) 
+        {
+            return redirect()->route('preincription');
+        }
         $idAuth = intval(Auth::id()); // Point-virgule ajouté, "intintval" corrigé en "intval"
         $user_id = intval($preInscription->user_id); // Point-virgule ajouté, "intintval" corrigé en "intval"
         
@@ -190,8 +202,5 @@ class PreInscriptionController extends Controller
         }
 
     }
-    public function download ()
-    {
 
-    }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreInscription\PreInscriptionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\PreInscription;
+
 
 use Illuminate\View\View;
 
@@ -26,14 +28,21 @@ Route::get('/', function () {
 })->name('homePage');
 Route::get('/dashbord/apercu', [ PreInscriptionController::class , 'show'])->name('viewPreinscriptionValidation');
 
-Route::get('/pre_inscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
+Route::get('/preinscription', [ PreInscriptionController ::class , 'preinscription'])->name('preincription');
 
-Route::post('/pre_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
+Route::post('/viewPre_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
 // Route::post('/pré_inscription', [PreInscriptionController::class, 'store'])->name('preinscriptionValidation');
 
 Route::post('/preinscription/download', [ PreInscriptionController ::class , 'download'])->name('preinscription.download');
 
-Route::get('/dashboard', function () {   return view('dashboard'); })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () { 
+    // Vérifie si l'utilisateur a déjà une pré-inscription
+    if (!PreInscription::where('user_id', Auth::id())->exists()) {
+        return redirect()->route('preincription')->with('message', 'Vous avez déjà complété votre pré-inscription.');
+    } 
+     return view('dashboard'); 
+    
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
