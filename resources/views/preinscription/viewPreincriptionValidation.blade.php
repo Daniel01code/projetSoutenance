@@ -152,10 +152,12 @@
                 <fieldset class="border-none mb-4">
                     <h2 class="text-2xl font-semibold text-center mb-4">Informations personnelles</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
                         <div class="flex items-center">
                             <label class="block mb-1 font-bold w-1/3">Cursus académique des années antérieures :</label>
                             <p class="underline w-2/3"></p> <!-- Espace réservé -->
                         </div>
+                        
                         <div class="flex items-center">
                             <label class="block mb-1 font-bold w-1/3">2023/2024 :</label>
                             <p class="underline w-2/3">{{ $preInscription->annee_passed1 }}</p>

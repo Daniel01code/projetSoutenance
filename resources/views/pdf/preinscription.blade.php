@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Fiche de Préinscription {{ $preInscription->matricule }}</title>
     <style>
+        /* Styles généraux pour le PDF, adaptés au format A4 */
         @page { 
             size: A4; 
             margin: 20mm; 
@@ -12,10 +13,12 @@
             font-family: Arial, sans-serif;
             font-size: 12pt;
             color: #333;
+            margin: 0;
+            padding: 0;
         }
         .bg-gray-100 {
-            background-color: #f3f4f6; /* Simule bg-gray-100 */
-            padding: 15mm;
+            background-color: white; /* Aligné sur @media print */
+            padding: 1cm; /* Aligné sur p-6 en impression */
         }
         .header {
             display: flex;
@@ -27,17 +30,18 @@
             width: 33%;
             text-align: center;
             font-weight: bold;
+            font-size: 12pt; /* Aligné sur impression */
         }
         .header-logo {
             width: 33%;
             text-align: center;
         }
         .header-logo img {
-            width: 50mm; /* Ajusté pour A4 */
+            width: 50mm; /* Taille ajustée pour A4 */
             height: auto;
         }
         h1 {
-            font-size: 24pt;
+            font-size: 24pt; /* Aligné sur impression */
             font-weight: bold;
             text-align: center;
             margin-bottom: 15mm;
@@ -46,17 +50,17 @@
             background-color: #34d399; /* Simule bg-green-500 */
             color: white;
             padding: 10mm;
-            border-radius: 5mm;
             text-align: center;
             margin-bottom: 15mm;
             font-weight: bold;
+            font-size: 12pt; /* Aligné sur impression */
+            border: none; /* Pas de bordure pour cohérence */
         }
         .content {
+            padding: 1cm; /* Aligné sur p-6 en impression */
+            border: 1px solid #ccc; /* Aligné sur impression */
+            box-shadow: none; /* Aligné sur impression */
             background-color: white;
-            padding: 15mm;
-            border-radius: 5mm;
-            border: 1px solid #ccc; /* Simule shadow-md */
-            margin-bottom: 15mm;
         }
         .photo-container {
             display: flex;
@@ -64,10 +68,9 @@
             margin-bottom: 10mm;
         }
         .photo-4x4 {
-            width: 40mm;
+            width: 40mm; /* 4cm converti pour PDF */
             height: 40mm;
-            border: 2px dashed #9ca3af; /* Simule border-gray-400 */
-            border-radius: 5mm;
+            border: 2px dashed #9ca3af;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -78,14 +81,16 @@
             object-fit: cover;
         }
         .photo-4x4 span {
-            color: #6b7280; /* Simule text-gray-500 */
+            color: #6b7280;
+            font-size: 12pt; /* Aligné sur impression */
         }
         fieldset {
             border: none;
             margin-bottom: 10mm;
+            page-break-inside: avoid; /* Aligné sur impression */
         }
         h2 {
-            font-size: 18pt;
+            font-size: 18pt; /* Aligné sur impression */
             font-weight: bold;
             text-align: center;
             margin-bottom: 10mm;
@@ -93,22 +98,24 @@
         .grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 10mm; /* Simule gap-4 */
+            gap: 10mm;
         }
         .grid div {
             display: flex;
             align-items: center;
-            width: 48%; /* Simule grid-cols-2 */
+            width: 48%;
         }
         .grid label {
             font-weight: bold;
-            width: 33%; /* w-1/3 */
+            width: 33%;
             margin-bottom: 2mm;
+            font-size: 12pt; /* Aligné sur impression */
         }
         .grid p {
-            width: 67%; /* w-2/3 */
-            border-bottom: 1px solid #000; /* Simule underline */
+            width: 67%;
+            border-bottom: 1px solid #000;
             margin: 0;
+            font-size: 12pt; /* Aligné sur impression */
         }
     </style>
 </head>
@@ -122,11 +129,9 @@
                 <p>CENTRE DE FORMATION<br>PROFESSIONNELLE LA CANADIENNE</p>
             </div>  
             <div class="header-logo">
-                
-            <img class="w-17 h-14 rounded-full" src="/image/LOGO RETINA.jpg" alt="Logo">
-            
+                <img src="{{ public_path('/image/LOGO RETINA.jpg') }}" alt="Logo">
             </div>
-                <div class="header-column">
+            <div class="header-column">
                 <p>MINISTRY OF EMPLOYMENT AND<br>VOCATIONAL TRAINING</p>
                 <p></p>
                 <p>CANADIAN VOCATIONAL<br>TRAINING CENTER</p>
@@ -135,13 +140,6 @@
 
         <!-- Titre -->
         <h1>FICHE DE PRÉ-INSCRIPTION 2024/2025</h1>
-
-        <!-- Message de succès -->
-        @if (session('success'))
-            <div class="success-message">
-                <p>{{ session('success') }}</p>
-            </div>
-        @endif
 
         <!-- Contenu -->
         <div class="content">
